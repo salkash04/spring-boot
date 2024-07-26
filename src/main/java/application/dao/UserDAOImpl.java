@@ -1,8 +1,8 @@
 package application.dao;
 
+import application.model.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import application.model.User;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,8 +21,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    @Transactional
-    public List<User> getUsers(){
+    public List<User> getUsers() {
         return entityManager.createQuery("FROM User", User.class).getResultList();
     }
 
@@ -39,7 +38,6 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    @Transactional
     public User getUser(int id) {
         return entityManager.find(User.class, id);
     }
