@@ -1,15 +1,13 @@
-package ru.kata.spring.boot_security.demo.dao;
+package ru.kata.spring.boot_security.demo.repository;
 
 import org.springframework.stereotype.Repository;
 import ru.kata.spring.boot_security.demo.model.Role;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.HashSet;
 import java.util.Set;
 
 @Repository
-public class UserDaoImp {
+public class UserSetRole {
     public Set<Role> setRolesForUser(String roleAdmin, String roleUser) {
         Set<Role> setRole = new HashSet<>();
         Role userRole = new Role();

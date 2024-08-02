@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.service.UserService;
 import ru.kata.spring.boot_security.demo.service.UserServiceImp;
 
 import java.security.Principal;
@@ -17,19 +18,19 @@ import java.util.Set;
 
 @Controller
 public class AdminController {
-    private UserServiceImp userServiceImp;
+    private UserService userService;
 
     private PasswordEncoder passwordEncoder;
 
     @Autowired
     public AdminController(UserServiceImp userServiceImp, PasswordEncoder passwordEncoder) {
-        this.userServiceImp = userServiceImp;
+        this.userService = userServiceImp;
         this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping(value = "/admin")
     public String getAdminIndexPage(Principal principal, ModelMap model) {
-        model.addAttribute("listUsers", userServiceImp.getListUsers());
+        model.addAttribute("listUsers", userService.getListUsers());
         return "admin/index";
     }
 
@@ -47,8 +48,8 @@ public class AdminController {
                                   ModelMap model) {
 
         User user = new User(username, passwordEncoder.encode(password), email);
-        user.setRoles(userServiceImp.setRolesForUser(roleAdmin, roleUser));
-        userServiceImp.addUser(user);
+        user.setRoles(userService.setRolesForUser(roleAdmin, roleUser));
+        userService.addUser(user);
 
         return "redirect:/admin";
     }
@@ -57,7 +58,7 @@ public class AdminController {
     public String deletedUser(@RequestParam(value = "id") String id,
                               ModelMap model) {
         if (id != "") {
-            userServiceImp.deleteUser(Long.parseLong(id));
+            userService.deleteUser(Long.parseLong(id));
         }
         return "redirect:/admin";
     }
@@ -66,7 +67,7 @@ public class AdminController {
     public String editUserForm(@RequestParam(value = "id") String id,
                                ModelMap model) {
         if (id != "") {
-            User user = userServiceImp.findUserById(Long.parseLong(id));
+            User user = userService.findUserById(Long.parseLong(id));
             String checkboxAdmin = "false";
             String checkboxUser = "false";
             Set setRoles = user.getRoles();
@@ -95,17 +96,17 @@ public class AdminController {
                            @RequestParam(value = "roleAdmin", required = false) String roleAdmin,
                            @RequestParam(value = "roleUser", required = false) String roleUser,
                            ModelMap model) {
-        if (userServiceImp.checkNullEditUser(id, username, password, email) == false) {
+        if (userService.checkNullEditUser(id, username, password, email) == false) {
             model.addAttribute("id", id);
             return "admin/edit-user-error";
         }
-        User user = userServiceImp.findUserById(Long.parseLong(id));
+        User user = userService.findUserById(Long.parseLong(id));
         user.setId(Long.parseLong(id));
         user.setUsername(username);
         user.setPassword(passwordEncoder.encode(password));
         user.setEmail(email);
-        user.setRoles(userServiceImp.setRolesForUser(roleAdmin, roleUser));
-        userServiceImp.addUser(user);
+        user.setRoles(userService.setRolesForUser(roleAdmin, roleUser));
+        userService.addUser(user);
 
         return "redirect:/admin";
     }
