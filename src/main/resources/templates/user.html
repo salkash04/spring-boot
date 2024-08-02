@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Личная Страница</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+        <div>
+            <span class="navbar-text text-white font-weight-bold" th:text="${user.getEmail()}"></span>
+            <span class="navbar-text text-white">with roles:</span>
+            <span class="navbar-text text-white" th:text="${user.getRoles()}"></span>
+        </div>
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="btn btn-dark">Logout</button>
+        </form>
+    </div>
+</nav>
+
+<div class="container-fluid bg-light">
+
+    <div class="row">
+        <!-- left-panel -->
+        <div class="col-2 bg-white pt-3 px-0">
+            <div class="container-fluid bg-white" >
+                <ul class="nav flex-column nav-pills" role="tablist">
+                    <li class="nav-item">
+                        <a href="/user" class="nav-link active">User</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col" style="background-color:#fafafa ;">
+            <div class="container-fluid" id="showUsers">
+                <br>
+                <h1>Информация юзера</h1>
+                <br>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Имя</th>
+                            <th>eMail</th>
+                            <th>Возраст</th>
+                            <th>Роль</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="user1 : ${user}">
+                            <td th:utext="${user1.getId()}"></td>
+                            <td th:utext="${user1.getUsername()}"></td>
+                            <td th:utext="${user1.getEmail()}"></td>
+                            <td th:utext="${user1.getAge()}"></td>
+                            <td th:utext="${user1.getRoles()}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
