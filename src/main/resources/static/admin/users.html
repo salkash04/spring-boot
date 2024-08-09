@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Все пользователи</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+          integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+            crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
+
+</head>
+<body>
+<script src="/js/jquery-3.7.1.min.js"></script>
+<script src="/js/mainScript.js"></script>
+
+<div class="modal" id = "modalEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Изменение юзера</h5>
+                <button type="button" class="close closeEdit"  data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <form style="text-align: center; font-weight:bold" >
+                    <div class="form-group col-8 container-sm bg-white justify-content-center">
+                        <div class="modal-body">
+                            <div class="form-group mx-sm-3" >
+                                <strong><label for="idUp" class="col-form-label" >ID</label></strong>
+                                <br>
+                                <input class="form-control" type="number"  readonly id="idUp" name="id">
+                            </div>
+                            <div class="form-group mx-sm-3">
+                                <strong><label for="usernameUp" class="col-form-label">Имя</label></strong>
+                                <br>
+                                <input type="text" class="form-control" id="usernameUp"  name="username">
+                            </div>
+                            <div class="form-group mx-sm-3">
+                                <strong><label for="emailUp" class="col-form-label">eMail</label></strong>
+                                <br>
+                                <input type="text" class="form-control" id="emailUp" name="email" >
+                            </div>
+                            <div class="form-group mx-sm-3">
+                                <strong><label for="ageUp" class="col-form-label">Возраст</label></strong>
+                                <br>
+                                <input type="number" class="form-control" id="ageUp"  name="age">
+                            </div>
+                            <div class="form-group mx-sm-3">
+                                <strong><label for="passwordUp" class="col-form-label">Пароль</label></strong>
+                                <br>
+                                <input type="text" class="form-control" id="passwordUp"  name="password">
+                            </div>
+                            <div class="form-group text-center">
+                                <strong><label for="roleUp">Роль</label></strong>
+                                <select multiple class="custom-select w-60"
+                                        size="2" id="roleUp" name="role">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button"  class="btn btn-secondary closeEdit" data-dismiss="modal">Выйти</button>
+                        <button type="button" id = "submitEdit" class="btn btn-primary" data-dismiss="modal" >Изменить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal"  tabindex="-1" id = "deleteModal" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Удаление юзера</h5>
+                <button type="button" class="close closeEdit" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <form style="text-align: center; font-weight:bold">
+                    <div class="form-group col-8 container-sm bg-white justify-content-center">
+                        <div class="modal-body">
+                            <div class="form-group mx-sm-3" >
+                                <strong><label for="idDelete" class="col-form-label" >ID</label></strong>
+                                <br>
+                                <input class="form-control" type="number"  readonly id="idDelete" name="idDelete">
+                            </div>
+                            <div class="form-group mx-sm-3" >
+                                <strong><label for="nameDelete" class="col-form-label" >Имя</label></strong>
+                                <br>
+                                <input class="form-control" type="text"  readonly id="nameDelete" name="nameDelete">
+                            </div>
+                            <div class="form-group mx-sm-3" >
+                                <strong><label for="emailDelete" class="col-form-label" >eMail</label></strong>
+                                <br>
+                                <input class="form-control" type="text"  readonly id="emailDelete" name="emailDelete">
+                            </div>
+                            <div class="form-group mx-sm-3" >
+                                <strong><label for="ageDelete" class="col-form-label" >возраст</label></strong>
+                                <br>
+                                <input class="form-control" type="number"  readonly id="ageDelete" name="ageDelete">
+                            </div>
+                            <div class="form-group">
+                                <strong><label for="delRole">Role</label></strong>
+                                <select multiple class="custom-select w-60"
+                                        size="2" id="delRole" name="role" disabled>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary closeEdit" data-dismiss="modal">Выйти</button>
+                        <button type="button" id = "submitDelete" class="btn btn-danger" data-dismiss="modal" >Удалить</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+        <div>
+            <span class="navbar-text text-white font-weight-bold" id = "userNavEmail"></span>
+            <span class="navbar-text text-white">with roles:</span>
+            <span class="navbar-text text-white"  id = "userNavRoles"></span>
+        </div>
+        <form action="/logout" method="post">
+            <button type="submit" class="btn btn-dark">Logout</button>
+        </form>
+    </div>
+</nav>
+
+<div class="container-fluid bg-light">
+
+    <div class="row">
+        <!-- left-panel -->
+        <div class="col-2 bg-white pt-3 px-0">
+            <div class="container-fluid bg-white">
+                <ul class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
+                    <li class="nav-item">
+                        <a href="/admin/users.html" class="nav-link active">Admin</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/user.html" class="nav-link">User</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- left-panel -->
+
+
+        <!-- Admin panel -->
+        <div class="col-10" style="background-color:#fafafa ;">
+            <div class="container-fluid" id="showUsers">
+                <br>
+                <h1>Admin panel</h1>
+                <br>
+                <div>
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active usersTable" style="cursor: pointer;"  >Users Table</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link newUserPage" style="cursor: pointer;" >New user</a>
+                        </li>
+                    </ul>
+                </div>
+                <table class="table table-hover" id = "adminUsersTable">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Имя</th>
+                        <th>eMail</th>
+                        <th>Возраст</th>
+                        <th>Роль</th>
+                        <th>Изменить</th>
+                        <th>Удалить</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="container-fluid" id="addUser" style="display: none">
+                <br>
+                <h1>Admin panel</h1>
+                <br>
+                <div>
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link usersTable" style="cursor: pointer;" >Users Table</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active newUserPage" style="cursor: pointer;" >New user</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="card-block">
+                        <div class="col border bg-light">
+                            <h4 style="padding: 10px 10px 10px 15px">Добавление нового юзера</h4>
+                        </div>
+                        <div class="container-fluid border bg-white py-3 px-4">
+                            <form  style="text-align: center; font-weight:bold">
+                                <div class="form-group col-4 container-sm bg-white justify-content-center">
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label for="newUser" class="col-form-label">Имя</label>
+                                            <input type="text" class="form-control"  id="newUser" name="newUser" placeholder="Имя">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="newEmail" class="col-form-label">eMail</label>
+                                            <input type="text" class="form-control"  id="newEmail" name="newEmail">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="newAge" class="col-form-label">Возраст</label>
+                                            <input type="number" class="form-control"  id="newAge" name="newAge">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="newPassword" class="col-form-label">Пароль</label>
+                                            <input type="text" class="form-control"  id="newPassword" name="newPassword">
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><label for="newRole">Роль</label></strong>
+                                            <select multiple class="custom-select w-100"
+                                                    size="2" id="newRole" name="role">
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" id = "addNewUser" class="btn btn-success" data-dismiss="modal" >Добавить Пользователя </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+        </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
